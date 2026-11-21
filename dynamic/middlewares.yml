@@ -76,7 +76,7 @@ http:
     # Enabled in M1 once IAM exposes the verification endpoint.
     forwardauth-iam:
       forwardAuth:
-        address: "http://neatsprint-iam:8000/api/v1/iam/auth/verify"
+        address: "http://neatsprint-iam:8000/internal/auth/verify"
         trustForwardHeader: false
         authResponseHeaders:
           - X-User-ID
