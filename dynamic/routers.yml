@@ -1,0 +1,71 @@
+http:
+  routers:
+    api-auth:
+      rule: "PathPrefix(`/api/v1/auth`) || PathPrefix(`/api/v1/iam`)"
+      entryPoints: [web]
+      priority: 100
+      middlewares: [cors, security-headers, compress, ratelimit-auth]
+      service: iam
+
+    api-core:
+      rule: "PathPrefix(`/api/v1/core`)"
+      entryPoints: [web]
+      priority: 100
+      middlewares: [cors, security-headers, compress, ratelimit-user]
+      service: core
+
+    api-tasks:
+      rule: "PathPrefix(`/api/v1/tasks`)"
+      entryPoints: [web]
+      priority: 100
+      middlewares: [cors, security-headers, compress, ratelimit-user]
+      service: task
+
+    api-teams:
+      rule: "PathPrefix(`/api/v1/teams`)"
+      entryPoints: [web]
+      priority: 100
+      middlewares: [cors, security-headers, compress, ratelimit-user]
+      service: team
+
+    api-work:
+      rule: "PathPrefix(`/api/v1/work`)"
+      entryPoints: [web]
+      priority: 100
+      middlewares: [cors, security-headers, compress, ratelimit-user]
+      service: worklog
+
+    api-monitor:
+      rule: "PathPrefix(`/api/v1/monitor`)"
+      entryPoints: [web]
+      priority: 100
+      middlewares: [cors, security-headers, compress, ratelimit-user]
+      service: monitoring
+
+    api-chat:
+      rule: "PathPrefix(`/api/v1/chat`)"
+      entryPoints: [web]
+      priority: 100
+      middlewares: [cors, security-headers, compress]
+      service: chat
+
+    api-reports:
+      rule: "PathPrefix(`/api/v1/reports`)"
+      entryPoints: [web]
+      priority: 100
+      middlewares: [cors, security-headers, compress, ratelimit-user]
+      service: reports
+
+    api-ai:
+      rule: "PathPrefix(`/api/v1/ai`)"
+      entryPoints: [web]
+      priority: 100
+      middlewares: [cors, security-headers, compress, ratelimit-user]
+      service: ai
+
+    web:
+      rule: "PathPrefix(`/`)"
+      entryPoints: [web]
+      priority: 1
+      middlewares: [security-headers]
+      service: web

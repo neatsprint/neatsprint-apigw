@@ -1,0 +1,39 @@
+# Static Traefik configuration for local development.
+# Production uses the same routers with a managed ingress/ACME configuration.
+entryPoints:
+  web:
+    address: ":80"
+  traefik:
+    address: ":8080"
+
+api:
+  dashboard: true
+  insecure: true  # local development only
+
+providers:
+  file:
+    directory: /etc/traefik/dynamic
+    watch: true
+
+log:
+  level: INFO
+  format: json
+
+accessLog:
+  format: json
+  fields:
+    headers:
+      defaultMode: drop
+      names:
+        X-Request-ID: keep
+        X-User-ID: drop
+        X-Tenant-ID: drop
+
+metrics:
+  prometheus:
+    addEntryPointsLabels: true
+    addRoutersLabels: true
+    addServicesLabels: true
+
+ping:
+  entryPoint: web

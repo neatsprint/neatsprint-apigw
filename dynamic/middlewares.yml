@@ -1,0 +1,89 @@
+http:
+  middlewares:
+    security-headers:
+      headers:
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        stsPreload: true
+        contentTypeNosniff: true
+        frameDeny: true
+        referrerPolicy: no-referrer
+        permissionsPolicy: "camera=(), microphone=(), geolocation=()"
+        customResponseHeaders:
+          X-Content-Type-Options: nosniff
+          X-Frame-Options: DENY
+          Cross-Origin-Opener-Policy: same-origin
+          Cross-Origin-Resource-Policy: same-origin
+
+    compress:
+      compress: {}
+
+    cors:
+      headers:
+        accessControlAllowOriginList:
+          - http://localhost:3000
+        accessControlAllowMethods:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+          - OPTIONS
+        accessControlAllowHeaders:
+          - Authorization
+          - Content-Type
+          - X-Request-ID
+          - X-Device-ID
+          - Idempotency-Key
+        accessControlExposeHeaders:
+          - X-Request-ID
+          - RateLimit-Limit
+          - RateLimit-Remaining
+          - RateLimit-Reset
+          - Retry-After
+        accessControlAllowCredentials: true
+        accessControlMaxAge: 600
+        addVaryHeader: true
+
+    # Per-instance token bucket. When the platform scales horizontally, enable the
+    # Redis-backed rate-limit plugin so counters are shared.
+    ratelimit-public:
+      rateLimit:
+        average: 60
+        burst: 20
+        period: 1m
+        sourceCriterion:
+          ipStrategy:
+            depth: 1
+
+    ratelimit-auth:
+      rateLimit:
+        average: 10
+        burst: 10
+        period: 1m
+        sourceCriterion:
+          ipStrategy:
+            depth: 1
+
+    ratelimit-user:
+      rateLimit:
+        average: 600
+        burst: 100
+        period: 1m
+        sourceCriterion:
+          requestHeaderName: X-User-ID
+
+    # Enabled in M1 once IAM exposes the verification endpoint.
+    forwardauth-iam:
+      forwardAuth:
+        address: "http://neatsprint-iam:8000/api/v1/iam/auth/verify"
+        trustForwardHeader: false
+        authResponseHeaders:
+          - X-User-ID
+          - X-Tenant-ID
+          - X-Roles
+          - X-Permissions
+        authRequestHeaders:
+          - Authorization
+          - X-Device-ID
+          - X-Request-ID

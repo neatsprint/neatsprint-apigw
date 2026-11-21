@@ -1,0 +1,42 @@
+http:
+  services:
+    iam:
+      loadBalancer:
+        servers:
+          - url: "http://neatsprint-iam:8000"
+    core:
+      loadBalancer:
+        servers:
+          - url: "http://neatsprint-core:8000"
+    task:
+      loadBalancer:
+        servers:
+          - url: "http://neatsprint-task:8000"
+    team:
+      loadBalancer:
+        servers:
+          - url: "http://neatsprint-team:8000"
+    worklog:
+      loadBalancer:
+        servers:
+          - url: "http://neatsprint-worklog:8000"
+    monitoring:
+      loadBalancer:
+        servers:
+          - url: "http://neatsprint-monitoring:8000"
+    chat:
+      loadBalancer:
+        servers:
+          - url: "http://neatsprint-chat:8000"
+    reports:
+      loadBalancer:
+        servers:
+          - url: "http://neatsprint-reports:8000"
+    ai:
+      loadBalancer:
+        servers:
+          - url: "http://neatsprint-ai:8000"
+    web:
+      loadBalancer:
+        servers:
+          - url: "http://neatsprint-web:3000"
