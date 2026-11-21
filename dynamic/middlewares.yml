@@ -58,8 +58,8 @@ http:
 
     ratelimit-auth:
       rateLimit:
-        average: 10
-        burst: 10
+        average: 30
+        burst: 30
         period: 1m
         sourceCriterion:
           ipStrategy:
