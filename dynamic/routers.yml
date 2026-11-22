@@ -6,6 +6,9 @@ http:
       rule: >-
         Path(`/api/v1/auth/login`) ||
         Path(`/api/v1/auth/refresh`) ||
+        Path(`/api/v1/auth/forgot-password`) ||
+        Path(`/api/v1/auth/reset-password`) ||
+        Path(`/api/v1/auth/social/google`) ||
         Path(`/api/v1/auth/.well-known/jwks.json`) ||
         Path(`/api/v1/iam/invitations/accept`)
       entryPoints: [web]
