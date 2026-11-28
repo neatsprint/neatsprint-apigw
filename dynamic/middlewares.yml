@@ -86,4 +86,5 @@ http:
         authRequestHeaders:
           - Authorization
           - X-Device-ID
+          - X-Device-Proof
           - X-Request-ID
